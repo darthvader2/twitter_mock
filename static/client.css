@@ -1,0 +1,156 @@
+h1{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: relative;
+    color :white;
+
+}
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    display: grid;
+    place-items: center;
+
+    background:   #141D26;
+}
+
+
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    box-shadow: 4px 4px 12px 2px;
+    border-radius: 1rem;
+
+}
+
+.text-input{
+    float: right;
+    width: 150px;
+}
+
+.navigation-sec{
+    width: 90%;
+    display: flex;
+
+}
+.navigation-sec li{
+    list-style-type: none;
+}
+
+
+.nav-label{
+    padding:10px;
+    background-color: rgb(123, 141, 197);
+    margin: 10px;
+    border-radius: 10px;
+}
+
+#navigation-wraper{
+    width:95%;
+
+}
+
+
+
+.nav {
+    position: relative;
+    z-index: 2;
+    margin: 10px .5em 0;
+}
+
+.tabs section,
+.tabs section:target ~ section {
+   display: none;
+}
+.tabs section:target,
+.tabs section:last-child {
+    display: block;
+    clear: left;
+    margin: 0 .5em;
+    min-width: 300px;  /* for show only */
+    min-height: 200px; /* for show only */
+    position: relative;
+    z-index: 1;
+    padding: 10px;
+}
+
+.tabActive { /* set for tab 1 */
+    position: absolute;
+    top: -2em;
+    left: .5em;
+    border-bottom: transparent;
+    background-color: inherit;
+    margin-top: -1px; /* top border height */
+    margin-left: -1px; /* left border width */
+}
+
+
+
+#tab2 .tabActive {left: 3.5em;}
+#tab3 .tabActive {left: 6.5em;}
+
+.nav li{
+    padding:10px;
+    background-color: rgb(123, 141, 197);
+    margin: 10px;
+    border-radius: 10px;
+    list-style-type: none;
+    width:4rem;
+
+}
+
+a{
+    text-decoration: none;
+    color: darkblue;
+}
+
+.passwordchange{
+    width: 250px;
+    height: 250px;
+    background-color:  #243447;
+    color: white;
+    display: grid;
+    padding: 50px;
+    border-radius: 25px;
+}
+
+
+#content-wraper{
+width: 89%;
+padding-top: 3%;
+color:white;
+}
+
+.postmessage{
+    height: 10%;
+    width: 80%;
+    background-color:  #243447;
+    color: white;
+    display: grid;
+    padding: 50px;
+    border-radius: 25px;
+    margin-top: 20px;
+
+}
+
+.wall{
+    height: 10%;
+    width: 80%;
+    background-color:  #243447;
+    color: white;
+    display: grid;
+    padding: 50px;
+    border-radius: 25px;
+    margin-top: 20px;
+    
+}
+
+ul{
+    list-style-type: none;
+}
+
+#headerimage{
+    width:90%;
+    border-radius: 30px;
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf8" name="viewport">
+
+    <link href="static/client.css" , type="text/css" , rel  = "stylesheet">
+    <script src = "static/client.js" type = "text/javascript"> </script>
+    <script src = "static/serverstub.js" type = "text/javascript"></script>
+    <script type="text/view" id = "welcomeview">
+    <title>Welcome to twidder</title>
+    <h1 class="welcomeheading"> Welcome to Twidder</h1>
+
+    <div class="cards">
+        <div class="card">
+            <img id  = "headerimage" src="static/wimage.png" alt = "Header image for twidder" />
+        </div>
+
+            <div class="card">
+                <div class="sign-in" >
+
+                <h3>Sign in</h3>
+
+                <form onsubmit="return false">
+
+                <label  for="email"><b>Email</b></label>
+                <input type="email" placeholder="Enter Email" name="email" id ="email_in"  required>
+            <br>
+                <label  for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" id = "psw_in" required>
+            <br>
+                <div id = "login-error"></div>
+            <br>
+                <button style = "padding:2px;" type="submit" onclick = "signin_validator()">Login</button>
+
+
+            </form>
+
+            <form onsubmit="return false">
+            <h3>Sign up</h3>
+                <label  for="email"><b>Email</b></label>
+                <input   type="email" placeholder="Enter Email" name="email" id = "email_up" required>
+            <br>
+                <label  for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" id ="psw_up" required>
+            <br>
+                <label   for="psw-repeat"><b>Repeat Password</b></label>
+                <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+            <br>
+                <label   for="first-name"><b>First name</b></label>
+                <input type="text" placeholder="First name" name="first-name" id="first-name" required>
+            <br>
+                <label   for="family-name"><b>Family name</b></label>
+                <input type="text" placeholder="Family name" name="family-name" id="family-name" required>
+            <br>
+                <label   for="gender"><b>Gender</b></label>
+                <input type="text" placeholder="Gender" name="gender" id="gender" required>
+            <br>
+                <label   for="ciy"><b>City</b></label>
+                <input type="text" placeholder="City" name="city" id="city" required>
+            <br>
+                <label   for="country"><b>Country</b></label>
+                <input type="text" placeholder="Country" name="country" id="country" required>
+            <br>
+            <div id = "signup-error"></div>
+            <br>
+            <button style = "padding:2px;" type="submit" onclick ="signup_validator()">Sign up</button>
+        </form>
+
+        </div>
+
+             </div>
+        </div>
+            </div>
+
+
+
+        </script>
+
+        <script type="text/view" id="profileview">
+
+        <h1 class = "ffg">Twidder</h1>
+
+        </script>
+
+        <script type = "text/view" , id = "navigationview">
+            <ul class="nav">
+                <li><a href="#tab1">Home</a></li>
+                <li><a href="#tab2">Browse</a></li>
+                <li><a href="#tab3">Account</a></li>
+               </ul>
+        </script>
+    </head>
+    <script type="view/text" id = "contentview">
+
+     <section  class="tabs">
+
+        <section id="tab1">
+            <div class="tabActive">
+                <h1>Home</h1>
+            <div id = "demo"></div>
+            <br> <label for "hfirtsname">First Name: </label> <span id="hfirstname"></span> </br>
+            <br> <label for "hfamilyname">Family Name: </label> <span id="hfamilyname"></span> </br>
+            <br> <label for "hemail">Email: </label> <span id="hemail"></span> </br>
+            <br> <labelfor "hgender">Gender </label> <span id="hgender"></span> </br>
+            <br> <label for "hcity"></label>City:  <span id="hcity"></span> </br>
+            <br> <labelfor "hcountry">Country: </label> <span id="hcountry"></span> </br>
+
+            <div class = "postmessage">
+                <form onsubmit="return false">
+                    <h1>Post message</h1>
+                    <input style = "padding :50px; margin-top:10px" type="text" placeholder="Message" name="psm" id ="psm">
+                 <br>
+                 <button style = "padding:2px; margin-top :10px" type="submit" onclick = "postmsg()">submit</button>
+
+            </form>
+            </div>
+
+            <div class = "wall">
+                <h1>Wall </wall>
+                <button style = "width:80px;margin-top:15px" type="button" onclick = "load_msgs()" >Reload</button>
+                <div id = "msgs">
+
+                </div>
+            </div>
+            </div>
+        </section>
+
+            <section id="tab2">
+                <div class="tabActive" onload = "load()">
+                <h1>Browse</h1>
+                <div>
+                    <form onsubmit="return false">
+                      <row>
+                        <label for="usersearch"> Enter Email-adress of wanted user </label>
+                        <input id="usersearch" type="text" required>
+                        <button type = "submit" onclick="search_user()"> Search </button>
+                    </div>
+
+                  <div id="browse-wrapper"></div>
+
+                </div>
+
+                </div>
+            </section>
+
+            <section id="tab3"><div class="tabActive">
+                <h1>Account</h1>
+
+                <form onsubmit="return false">
+                <div class = "passwordchange">
+                    <h1>Change password</h1>
+                    <label   for="old-psw"><b>Old-Password</b></label>
+                    <input class = "text-input" type="password" placeholder="Old-Password" name="old-psw" id ="old_psw" required>
+                <br>
+                    <label   for="psw"><b>Password</b></label>
+                    <input class = "text-input" type="password" placeholder="Enter Password" name="psw" id ="psw_up" required>
+                <br>
+                    <label   for="psw-repeat"><b>Repeat Password</b></label>
+                    <input class = "text-input"  type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+                <br>
+                <div id = "cp-error"></div>
+                <br>
+                    <button style = "width:80px;margin-top:15px" type="submit" onclick ="change_pass()">submit</button>
+                <br>
+
+                </form>
+
+                </div>
+                <button style = "width:80px;margin-top:15px" type="button" onclick ="signout()">sign-out</button>
+
+            </div>
+        
+        </section>
+
+
+
+              </section>
+    </script>
+<script type = "view/text" id = "wallpost">
+    <div>
+      <br> <label for "ufirstname">First Name: </label> <span id="ufirstname"></span> </br>
+      <br> <label for "ufamilyname">Family Name: </label> <span id="ufamilyname"></span> </br>
+      <br> <label for "uemail">Email: </label> <span id="uemail"></span> </br>
+      <br> <labelfor "ugender">Gender </label> <span id="ugender"></span> </br>
+      <br> <label for "ucity"></label>City:  <span id="ucity"></span> </br>
+      <br> <labelfor "ucountry">Country: </label> <span id="ucountry"></span> </br>
+    </div>
+
+    <div class="postmessage">
+    <h1>Post message</h1>
+    <input style = "padding :50px; margin-top:10px" type="text" placeholder="Message" name="wallpsm" id ="wallpsm">
+ <br>
+ <button style = "padding:2px; margin-top :10px" type="submit" onclick = "postonwall()">submit</button>
+
+ </div>
+ <div class = "wall">
+     <h1>Wall </wall>
+     <button style = "width:80px;margin-top:15px" type="submit" onclick = "reloadwall()" >Reload</button>
+     <div id = "usermsgs">
+     </div>
+ </div>
+</script>
+<body>
+    <div id = "welcomeview-wraper"></div>
+    <div id = "navigation-wraper"></div>
+    <div id = "content-wraper">
+
+    </div>
+    <!--<div id = "postonwall"></div>-->
+
+</body>
+</html>
