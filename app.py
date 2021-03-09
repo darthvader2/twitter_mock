@@ -234,9 +234,9 @@ def post_message():
         return jsonify({"success": False, "message": "Messa"}),400
     return jsonify({"success": True, "message": "Message has been sent"})
 
-port = int(os.environ.get("PORT", 5000))
+port = int(os.environ.get('PORT', 5000))
 
 if "__name__" == "__main__":
-    http_server = WSGIServer(('', 8000), app, handler_class=WebSocketHandler)
+    http_server = WSGIServer(('0.0.0.0', port=port, debug=True), app, handler_class=WebSocketHandler)
     http_server.serve_forever()
     #app.run(debug = True)
