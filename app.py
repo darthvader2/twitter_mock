@@ -239,4 +239,4 @@ port = int(os.environ.get("PORT", 5000))
 if "__name__" == "__main__":
     http_server = WSGIServer(('', 8000), app, handler_class=WebSocketHandler)
     http_server.serve_forever()
-    app.run(debug = True)
+    #app.run(debug = True)
