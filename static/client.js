@@ -188,7 +188,7 @@ signin_validator = function(){
    const payloadString = JSON.stringify(payload)
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , host + "/sign_in" ,true);
+   xhr.open("POST" , "/sign_in" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
