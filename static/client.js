@@ -5,7 +5,7 @@ var webSocket = null;
 
 connectWS = function () {
    if(webSocket === null){
-       webSocket = new WebSocket("ws://localhost:8000/api");
+       webSocket = new WebSocket("wss://twiddermock.herokuapp.com/api");
        //console.log("connectWS");
 
        webSocket.onmessage = function (event) {
@@ -42,7 +42,7 @@ connectWS = function () {
    }
    else if(webSocket.readyState === 3){ //shouldn't be used but you never know
        //console.log("reconnect here");
-       webSocket = new WebSocket("ws://localhost:8000/api");
+       webSocket = new WebSocket("wss://twiddermock.herokuapp.com/api");
 
        var msg = {
            type : "login",
@@ -147,7 +147,7 @@ if(password.length < 10  ) {
       const payloadString = JSON.stringify(payload)
       
       let xhr = new XMLHttpRequest();
-      xhr.open("POST" , "http://127.0.0.1:8000/sign_up" ,true);
+      xhr.open("POST" , "/sign_up" ,true);
       xhr.setRequestHeader("Content-type", "application/json");
       xhr.onreadystatechange = () =>{
          if(xhr.readyState === 4 && xhr.status === 200){
@@ -254,7 +254,7 @@ change_pass = function(){
    const payloadString = JSON.stringify(payload)
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/change_password" ,true);
+   xhr.open("POST" , "/change_password" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
@@ -283,7 +283,7 @@ load = function(token){
    const payloadString = JSON.stringify(payload)
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/data_by_token" ,true);
+   xhr.open("POST" , "/data_by_token" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
@@ -321,7 +321,7 @@ load_msgs = function(token){
    const payloadString = JSON.stringify(payload)
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/messages_token" ,true);
+   xhr.open("POST" , "/messages_token" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
@@ -361,7 +361,7 @@ signout = function(){
    const payloadString = JSON.stringify(payload)
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/sign_out" ,true);
+   xhr.open("POST" , "/sign_out" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
@@ -407,7 +407,7 @@ postmsg = function(){
    const payloadString = JSON.stringify(payload)
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/post_message" ,true);
+   xhr.open("POST" , "/post_message" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
@@ -431,7 +431,7 @@ function reloadwall(){ //see other Users wall on their home tab
   var token = localStorage.getItem('token');
   var wanted_email = document.getElementById("usersearch").value;
   let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/messages_email/"+wanted_email,true);
+   xhr.open("POST" , "/messages_email/"+wanted_email,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
@@ -477,7 +477,7 @@ function postonwall(){ //send message to user while visiting home tab
 const payloadString = JSON.stringify(payload)
 
 let xhr = new XMLHttpRequest();
-xhr.open("POST" , "http://127.0.0.1:8000/post_message" ,true);
+xhr.open("POST" , "/post_message" ,true);
 xhr.setRequestHeader("Content-type", "application/json");
 xhr.onreadystatechange = () =>{
    if(xhr.readyState === 4 && xhr.status === 200){
@@ -504,7 +504,7 @@ search_user = function(){
    
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/data_email/" + wanted_email ,true);
+   xhr.open("POST" , "/data_email/" + wanted_email ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
