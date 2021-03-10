@@ -26,12 +26,12 @@ def save_user(email,first_name,last_name,password,gender , city , country):
     return True
 
 
-def sign_in(email,password):
-    cursor = get_db().execute("select email,password from users where email like ?", [email])
+def sign_in(email):
+    cursor = get_db().execute("select email,password_hash, salt from users where email like ?", [email])
     user = cursor.fetchone()
-    if user[1] != password:
-        return False
-    return True
+    if not None user:
+        return user
+    return False
 
 
 def get_users():
@@ -80,5 +80,3 @@ def findposts_email(email):
     for i in range(len(rows)):
         result.append({'writer':rows[i][1], 'content':rows[i][2]})
     return result
-    
-    

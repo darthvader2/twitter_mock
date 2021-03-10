@@ -2,10 +2,11 @@ CREATE TABLE users(
     email varchar(100),
     first_name varchar(50),
     last_name varchar(50),
-    password varchar(50),
+    password_hash varchar(50),
     gender varchar(50),
     city varchar(50),
-    country varchar(50));
+    country varchar(50),
+    salt varchar(50));
 
 CREATE TABLE loggedin_users(
     token varchar(100),

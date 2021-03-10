@@ -4,11 +4,12 @@ import secrets
 from geventwebsocket.handler import WebSocketHandler
 from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketError
-import os 
+import os
 import json
+from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
-
+bcrypt = Bcrypt(app)
 
 
 clientSockets = {}
@@ -43,7 +44,7 @@ def api():
 
 
 ## Client route
-    
+
 @app.route("/" , methods = ['GET' , 'POST'])
 def start():
     return app.send_static_file("client.html")
@@ -80,7 +81,9 @@ def sign_up():
     if not country:
         return jsonify({"success": False,"msg": "Missing country parameter"}), 400
 
-    result = database_helper.save_user(email,first_name,last_name,password,gender , city , country)
+    salt = os.urandom(10)
+    password_hash = bcrypt.generate_password_hash(password + salt)
+    result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country, salt)
 
     if (result == True):
         return jsonify({"success": True,"msg": "User saved."}), 200
@@ -112,7 +115,10 @@ def sign_in():
     if len(password) < 10:
         return jsonify({"success": False,"msg": "Password length not sufficient"}), 400
 
-    result = database_helper.sign_in(email,password)
+    user = database_helper.sign_in(email)
+    stored_pw = user[1]
+    salt = user[2]
+    result = bcrypt.check_password_hash(stored_pw, password + salt)
     
     if (result == True):
         token = secrets.token_hex(16)
@@ -139,7 +145,7 @@ def sign_out():
 
 
 ## Get user data by token
- 
+
 @app.route('/data_by_token', methods = ['GET' , 'POST'])
 def get_by_token():
     token = request.json['token']
@@ -205,8 +211,8 @@ def get_user_messages_by_token():
         return jsonify({"success": False, "message": "No such token."}),400
     else:
         return messages_email(email)
-    
-    
+
+
 
 ## Get messages by email
 
