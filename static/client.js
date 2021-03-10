@@ -174,6 +174,7 @@ if(password.length < 10  ) {
 
 
 }
+var host = location.host;
 
 signin_validator = function(){
    var email = document.getElementById("email_in").value;
@@ -187,7 +188,7 @@ signin_validator = function(){
    const payloadString = JSON.stringify(payload)
    
    let xhr = new XMLHttpRequest();
-   xhr.open("POST" , "http://127.0.0.1:8000/sign_in" ,true);
+   xhr.open("POST" , host + "/sign_in" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
