@@ -5,7 +5,6 @@ from geventwebsocket.handler import WebSocketHandler
 from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketError
 import os 
-from flask_sockets import Sockets
 import json
 
 app = Flask(__name__)
@@ -234,9 +233,9 @@ def post_message():
         return jsonify({"success": False, "message": "Messa"}),400
     return jsonify({"success": True, "message": "Message has been sent"})
 
-port = int(os.environ.get('PORT', 5000))
+port = int(os.environ.get('PORT', 8000))
 
 if "__name__" == "__main__":
-    http_server = WSGIServer(('0.0.0.0', port=port, debug=True), app, handler_class=WebSocketHandler)
+    http_server = WSGIServer(('0.0.0.0', port), app, handler_class=WebSocketHandler)
     http_server.serve_forever()
     #app.run(debug = True)

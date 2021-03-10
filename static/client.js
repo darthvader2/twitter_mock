@@ -82,7 +82,6 @@ if (localStorage.getItem("token") != null) {
       console.log("not empty");
       token = localStorage.getItem('token');
       profileLoader(token);
-      socketConnection();
       
  
       
