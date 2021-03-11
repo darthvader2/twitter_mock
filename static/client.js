@@ -111,6 +111,7 @@ signup_validator  = function(){
    var country  = document.getElementById("country").value;
 
    console.log(email);
+
    var user = {
       email : email,
       password :password,

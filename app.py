@@ -84,6 +84,9 @@ def sign_up():
     salt = os.urandom(10)
     password_hash = bcrypt.generate_password_hash(password + salt)
     result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country, salt)
+    print (email)
+    print (password_hash)
+    print (salt)
 
     if (result == True):
         return jsonify({"success": True,"msg": "User saved."}), 200
@@ -192,7 +195,7 @@ def change_password():
     if (old_result == False):
         return jsonify({"success": False, "message": "Old password not right"}) ,400
     else:
-        new_password_hash = bcrypt.generate_password_hash(new_password) 
+        new_password_hash = bcrypt.generate_password_hash(new_password)
         new_result = database_helper.change_password(new_password ,email)
     if (new_result == True):
         return jsonify({"success": True, "message": "Password successfully changed", "data": ""}),200
