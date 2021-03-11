@@ -552,13 +552,19 @@ function geolocation(){
   if (document.getElementById('enable location').checked)
   {
     if (navigator.geolocation) {
-    position = navigator.geolocation.getCurrentPosition(position);
+    position = navigator.geolocation.getCurrentPosition(showPosition);
   } else {
     document.getElementById(locationError).innerHTML = "Geolocation is not supported by this browser.";
   }
+}
+
+function showPosition(position){
   lat = position.coord.latitude;
   long = position.coord.longitude;
   location = lat + ","+long;
+}
+
+function get_city(location){
   let xhr = new XMLHttpRequest();
 
   xhr.open("GET" , "https://geocode.xyz/?locate="+location,true);
@@ -571,7 +577,7 @@ function geolocation(){
    xhr.send();
  }
 }
-};
+
 
 /*function allowDrop(ev){
   ev.preventDefault();
