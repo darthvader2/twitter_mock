@@ -559,16 +559,16 @@ function geolocation(){
   lat = position.coord.latitude;
   long = position.coord.longitude;
   location = lat + ","+long;
-  /*let xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest();
 
   xhr.open("GET" , "https://geocode.xyz/?locate="+location,true);
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onreadystatechange = () =>{
      if(xhr.readyState === 4 && xhr.status === 200){
-        let location  = JSON.parse(xhr.responseText);*/
+        let location  = JSON.parse(xhr.responseText);
 
   }
-  // xhr.send();
+   xhr.send();
 };
 
 /*function allowDrop(ev){
