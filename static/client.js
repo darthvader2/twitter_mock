@@ -547,7 +547,7 @@ search_user = function(){
 
 };
 
-function geolocation(){
+/*function geolocation(){
   if document.getElementById('enable location').checked
   {
     if (navigator.geolocation) {
@@ -575,3 +575,4 @@ function allowDrop(ev){
 function drag(ev){
   ev.dataTransfer.setData("text", ev.target.id);
 }
+*/
