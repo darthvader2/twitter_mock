@@ -239,42 +239,38 @@ change_pass = function(){
 
    if(password.length < 10  ) {
       document.getElementById("cp-error").innerHTML = "Password must contain at least 10 signs";
-    }
-  else if(password != password2)
-    {
+  } else if(password != password2)
+  {
 
     document.getElementById("cp-error").innerHTML = "Passwords did not match";
-    }
+  }
   else {
-     var token = localStorage.getItem("token", token);
-     //var email = localStorage.getItem("email");
-     //var message = token+email;
-     //var hash = digestMessage(message);
+     var token = localStorage.getItem("token", token)
      const payload ={
-    //  "email": email
-    //  "hash" : hash,
-      "token": token,
+      "token" : token,
       "newpassword":password,
       "oldpassword":oldPassword
-      };
+   };
 
-      const payloadString = JSON.stringify(payload)
+   const payloadString = JSON.stringify(payload)
 
-      let xhr = new XMLHttpRequest();
-       xhr.open("POST" , "/change_password" ,true);
-       xhr.setRequestHeader("Content-type", "application/json");
-       xhr.onreadystatechange = () =>{
-          if(xhr.readyState === 4 && xhr.status === 200){
-            let object  = JSON.parse(xhr.responseText);
-            const cperror  = object.message;
-           document.getElementById("cp-error").innerHTML = cperror;
-           oldPassword = document.getElementById("old_psw").value = ""; //Clear all fields after password change
-           password = document.getElementById("psw_up").value = "";
-           password2 = document.getElementById("psw-repeat").value ="";
-         }
-       }
-       xhr.send(payloadString);
-     }
+   let xhr = new XMLHttpRequest();
+   xhr.open("POST" , "/change_password" ,true);
+   xhr.setRequestHeader("Content-type", "application/json");
+   xhr.onreadystatechange = () =>{
+      if(xhr.readyState === 4 && xhr.status === 200){
+      let object  = JSON.parse(xhr.responseText);
+      const cperror  = object.message;
+     document.getElementById("cp-error").innerHTML = cperror;
+     oldPassword = document.getElementById("old_psw").value = ""; //Clear all fields after password change
+     password = document.getElementById("psw_up").value = "";
+     password2 = document.getElementById("psw-repeat").value ="";
+
+
+  }
+}
+xhr.send(payloadString);
+}
 
 
 }
