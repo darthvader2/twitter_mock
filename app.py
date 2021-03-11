@@ -119,7 +119,7 @@ def sign_in():
     stored_pw = user[1]
     salt = user[2]
     result = bcrypt.check_password_hash(stored_pw, password + salt)
-    
+
     if (result == True):
         token = secrets.token_hex(16)
         loggedInUsers[token] = email
@@ -233,8 +233,9 @@ def post_message():
     token = request.json['token']
     message = request.json['message']
     reciever = request.json['email']
+    location = request.json['location']
     sender = loggedInUsers.get(token)
-    res = database_helper.addpost(sender, reciever, message)
+    res = database_helper.addpost(sender, reciever, message, location)
     if (res == False):
         return jsonify({"success": False, "message": "Messa"}),400
     return jsonify({"success": True, "message": "Message has been sent"})

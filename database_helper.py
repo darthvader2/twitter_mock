@@ -64,7 +64,7 @@ def addpost(sender, receiver, message):
         db = get_db()
         cursor = db.cursor()
         statement = "INSERT INTO messages VALUES (?, ?, ?)"
-        cursor.execute(statement ,[receiver,sender, message])
+        cursor.execute(statement ,[receiver,sender, message, location])
         db.commit()
         return True
     except:
@@ -78,5 +78,5 @@ def findposts_email(email):
     cursor.execute(query,[email])
     rows = cursor.fetchall()
     for i in range(len(rows)):
-        result.append({'writer':rows[i][1], 'content':rows[i][2]})
+        result.append({'writer':rows[i][1], 'content':rows[i][2]}, 'location':rows[i][3])
     return result

@@ -21,17 +21,17 @@ connectWS = function () {
                localStorage.removeItem("token");
                localStorage.removeItem("email"); var welcome_wraper = document.getElementById("welcomeview").innerHTML;
                document.getElementById("welcomeview-wraper").innerHTML = welcome_wraper;
-               
+
                var navigation_wraper = document.getElementById("navigationview").innerHTML;
                document.getElementById("navigation-wraper").innerHTML = "";
-               
+
                var content_wraper = document.getElementById("contentview").innerHTML;
                document.getElementById("content-wraper").innerHTML = "";
-               
+
 
 
                webSocket.close();
-               
+
            }
            //console.log(msg);
        }
@@ -58,7 +58,7 @@ connectWS = function () {
 }
 
  profileLoader = function(token){
-   
+
       var welcome_wraper = document.getElementById("profileview").innerHTML;
       var navigation_wraper = document.getElementById("navigationview").innerHTML;
       var content_wraper = document.getElementById("contentview").innerHTML;
@@ -70,7 +70,7 @@ connectWS = function () {
    localStorage.setItem("token" , token);
    load(token);
    load_msgs(token);
-   
+
 
 }
 
@@ -82,19 +82,19 @@ if (localStorage.getItem("token") != null) {
       console.log("not empty");
       token = localStorage.getItem('token');
       profileLoader(token);
-      
- 
-      
+
+
+
     }
    else{
       var welcome_wraper = document.getElementById("welcomeview").innerHTML;
       document.getElementById("welcomeview-wraper").innerHTML = welcome_wraper;
-      
+
        }
 
-     
+
    }
- 
+
 
 
 
@@ -123,12 +123,12 @@ signup_validator  = function(){
 
 
 if(password.length < 10  ) {
-       
+
        document.getElementById("signup-error").innerHTML = "Passwords length is not sufficient";
    } else if(password != password2)
    {
 
-     
+
      document.getElementById("signup-error").innerHTML = "Passwords did not match";
    }
    else {
@@ -141,11 +141,11 @@ if(password.length < 10  ) {
          "gender":gender,
          "city":city,
          "country":country
-         
+
       };
-   
+
       const payloadString = JSON.stringify(payload)
-      
+
       let xhr = new XMLHttpRequest();
       xhr.open("POST" , "/sign_up" ,true);
       xhr.setRequestHeader("Content-type", "application/json");
@@ -155,19 +155,19 @@ if(password.length < 10  ) {
             if (object['success'] == true){
                let object  = JSON.parse(xhr.responseText);
                 document.getElementById("signup-error").innerHTML = object['msg'];
-  
+
             }
             else{
                let object  = JSON.parse(xhr.responseText);
          document.getElementById("signup-error").innerHTML = object['msg'];
-  
+
             }
-                     
+
          }
-         
+
       }
       xhr.send(payloadString);
-     
+
 
    }
 
@@ -181,12 +181,12 @@ signin_validator = function(){
    const payload ={
       "email" : email,
       "password" : password
-      
+
    };
 
    var host = location.host;
    const payloadString = JSON.stringify(payload)
-   
+
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/sign_in" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
@@ -210,16 +210,16 @@ signin_validator = function(){
          else{
             console.log("something happende  - 151");
          }
-         
-         
+
+
       }
       else{
          let object  = JSON.parse(xhr.responseText);
       document.getElementById("login-error").innerHTML = object['msg'];
 }
-      
+
    }
-   xhr.send(payloadString); 
+   xhr.send(payloadString);
 }
 
 
@@ -248,11 +248,11 @@ change_pass = function(){
      const payload ={
       "token" : token,
       "newpassword":password,
-      "oldpassword":oldPassword      
+      "oldpassword":oldPassword
    };
 
    const payloadString = JSON.stringify(payload)
-   
+
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/change_password" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
@@ -277,18 +277,18 @@ xhr.send(payloadString);
 load = function(token){
 
    const payload ={
-      "token" : token      
+      "token" : token
    };
 
    const payloadString = JSON.stringify(payload)
-   
+
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/data_by_token" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
    xhr.onreadystatechange = () =>{
       if(xhr.readyState === 4 && xhr.status === 200){
          let object  = JSON.parse(xhr.responseText);
-         const person_object  = object.data; 
+         const person_object  = object.data;
          this_email = person_object.email
          document.getElementById("hfirstname").innerHTML = person_object.firstname;
          document.getElementById("hfamilyname").innerHTML = person_object.familyname;
@@ -298,16 +298,16 @@ load = function(token){
          document.getElementById("hcountry").innerHTML = person_object.country;
 
          document.getElementById("hfirstname").innerHTML = person_object.firstname;
-         localStorage.setItem("email" , person_object.email);     
+         localStorage.setItem("email" , person_object.email);
       }
       else{
          //let object  = JSON.parse(xhr.responseText);
          console.log("msg");
          //document.getElementById("login-error").innerHTML = object["msg"];
       }
-      
+
    }
-   xhr.send(payloadString); 
+   xhr.send(payloadString);
 
 
 }
@@ -315,11 +315,11 @@ load = function(token){
 load_msgs = function(token){
    token = localStorage.getItem("token");
    const payload ={
-      "token" : token      
+      "token" : token
    };
 
    const payloadString = JSON.stringify(payload)
-   
+
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/messages_token" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
@@ -336,30 +336,33 @@ load_msgs = function(token){
       var li=document.createElement('li' );
       var textnode = document.createTextNode(messages[i].content);
       var writer = document.createTextNode(messages[i].writer);
+      var location = document.createTextNode(messages[i].location);
+
       li.appendChild(textnode);
       li.appendChild(writer);
+      li.appendChild(location);
       ul.appendChild(li);
 
       }}
       else{
          console.log("msg");
          }
-   
-      
+
+
    }
-xhr.send(payloadString); 
+xhr.send(payloadString);
 }
 
 signout = function(){
    var token = localStorage.getItem('token');
-   
+
    const payload ={
       "token" : token
-      
+
    };
 
    const payloadString = JSON.stringify(payload)
-   
+
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/sign_out" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
@@ -372,24 +375,24 @@ signout = function(){
 
             var welcome_wraper = document.getElementById("welcomeview").innerHTML;
             document.getElementById("welcomeview-wraper").innerHTML = welcome_wraper;
-            
+
             var navigation_wraper = document.getElementById("navigationview").innerHTML;
             document.getElementById("navigation-wraper").innerHTML = "";
-            
+
             var content_wraper = document.getElementById("contentview").innerHTML;
             document.getElementById("content-wraper").innerHTML = "";
-            
+
          }
          else{
             console.log("something happende  - 151");
          }
-         
-         
+
+
       }
-      
+
    }
-   xhr.send(payloadString); 
-   
+   xhr.send(payloadString);
+
 }
 
 
@@ -397,15 +400,17 @@ postmsg = function(){
    var content = document.getElementById("psm").value;
    var token = localStorage.getItem('token');
    var email = localStorage.getItem('email');
+   var location = geolocation()
    console.log("pfk");
 
    const payload ={
       "token" : token,
       "message" : content,
-      "email":email
+      "email":email,
+      "location": location
    };
    const payloadString = JSON.stringify(payload)
-   
+
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/post_message" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
@@ -418,13 +423,13 @@ postmsg = function(){
          else{
             console.log("something happende  - 151");
          }
-         
-         
+
+
 }
-      
+
    }
-   xhr.send(payloadString); 
-   
+   xhr.send(payloadString);
+
 }
 
 function reloadwall(){ //see other Users wall on their home tab
@@ -446,33 +451,37 @@ function reloadwall(){ //see other Users wall on their home tab
       var li=document.createElement('li' );
       var textnode = document.createTextNode(messages[i].content);
       var writer = document.createTextNode(messages[i].writer);
+      var location = document.createTextNode(messages[i].location)
       li.appendChild(textnode);
       li.appendChild(writer);
+      li.appendChild(location)
       ul.appendChild(li);
 
       }}
          else{
             console.log("something happende  - 151");
-            
-            
-   
+
+
+
          }
-         
-            
+
+
 }
-xhr.send();   
+xhr.send();
    }
-    
- 
+
+
 
 function postonwall(){ //send message to user while visiting home tab
   var token = localStorage.getItem('token');
   var wanted_email = document.getElementById("usersearch").value;
   var content = document.getElementById("wallpsm").value;
+  var location = geolocation();
   const payload ={
    "token" : token,
    "message" : content,
-   "email":wanted_email
+   "email":wanted_email,
+   "location":location
 };
 const payloadString = JSON.stringify(payload)
 
@@ -488,12 +497,12 @@ xhr.onreadystatechange = () =>{
       else{
          console.log("something happende  - 151");
       }
-      
-      
+
+
 }
-   
+
 }
-xhr.send(payloadString); 
+xhr.send(payloadString);
 
 }
 
@@ -501,8 +510,8 @@ search_user = function(){
    var wanted_email = document.getElementById("usersearch").value;
    var token = localStorage.getItem('token');
    var wanted_user = serverstub.getUserDataByEmail(token, wanted_email);
-   
-   
+
+
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/data_email/" + wanted_email ,true);
    xhr.setRequestHeader("Content-type", "application/json");
@@ -519,22 +528,44 @@ search_user = function(){
             document.getElementById("ugender").innerHTML = wanted_user.data.gender;
             document.getElementById("ucity").innerHTML = wanted_user.data.city;
             document.getElementById("ucountry").innerHTML = wanted_user.data.country;
-       
+
           reloadwall(); //display messages
           postonwall(); //send message directly to user
          }
          else{
             console.log("something happende  - 151");
             document.getElementById("browse-wrapper").innerHTML = wanted_user.message;
-   
-         }
-         
-         
-}
-      
-   }
-   xhr.send(); 
-   
-   
 
+         }
+
+
+}
+
+   }
+   xhr.send();
+
+
+};
+
+function geolocation(){
+  if document.getElementById('enable location').checked
+  {
+    if (navigator.geolocation) {
+    position = navigator.geolocation.getCurrentPosition();
+  } else {
+    document.getElementById(locationError).innerHTML = "Geolocation is not supported by this browser.";
+  }
+  lat = position.coord.latitude;
+  long = position.coord.longitude;
+  location = lat + ","+long;
+  let xhr = new XMLHttpRequest();
+
+  xhr.open("GET" , "https://geocode.xyz/?locate="+location,true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.onreadystatechange = () =>{
+     if(xhr.readyState === 4 && xhr.status === 200){
+        let location  = JSON.parse(xhr.responseText);
+
+  }
+   xhr.send();
 };
