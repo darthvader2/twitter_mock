@@ -17,11 +17,11 @@ def disconnect_db():
         g.db = None
 
 
-def save_user(email,first_name,last_name,password,gender , city , country):
+def save_user(email,first_name,last_name,password_hash, gender , city , country, salt):
     db = get_db()
     cursor = db.cursor()
-    statement = "INSERT INTO users(email,first_name,last_name,password,gender , city , country) VALUES (?,?,?,?,?,?,?)"
-    cursor.execute(statement, [email,first_name,last_name,password,gender , city , country])
+    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country, salt) VALUES (?,?,?,?,?,?,?;?)"
+    cursor.execute(statement, [email,first_name,last_name,password_hash,gender , city , country, salt])
     db.commit()
     return True
 
@@ -52,7 +52,7 @@ def change_password(new_password, email): #password = newpassword
     try:
         db = get_db()
         cursor = db.cursor()
-        cursor.execute("UPDATE users SET password = ? WHERE email = ?", [new_password, email])
+        cursor.execute("UPDATE users SET password_hash = ? WHERE email = ?", [new_password, email])
         db.commit()
         return True
     except:

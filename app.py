@@ -6,7 +6,7 @@ from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketError
 import os
 import json
-from flask.ext.bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -192,6 +192,7 @@ def change_password():
     if (old_result == False):
         return jsonify({"success": False, "message": "Old password not right"}) ,400
     else:
+        new_password_hash = bcrypt.generate_password_hash(new_password) 
         new_result = database_helper.change_password(new_password ,email)
     if (new_result == True):
         return jsonify({"success": True, "message": "Password successfully changed", "data": ""}),200
