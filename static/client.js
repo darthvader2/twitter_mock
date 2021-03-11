@@ -548,8 +548,8 @@ search_user = function(){
 
 };
 
-/*function geolocation(){
-  if document.getElementById('enable location').checked
+function geolocation(){
+  if (document.getElementById('enable location').checked)
   {
     if (navigator.geolocation) {
     position = navigator.geolocation.getCurrentPosition();
@@ -570,7 +570,8 @@ search_user = function(){
   }
    xhr.send();
 };
-function allowDrop(ev){
+
+/*function allowDrop(ev){
   ev.preventDefault();
 }
 function drag(ev){
