@@ -401,7 +401,7 @@ postmsg = function(){
    var content = document.getElementById("psm").value;
    var token = localStorage.getItem('token');
    var email = localStorage.getItem('email');
-   var location = geolocation()
+   var location =
    console.log("pfk");
 
    const payload ={
@@ -557,14 +557,13 @@ function geolocation(){
     document.getElementById(locationError).innerHTML = "Geolocation is not supported by this browser.";
   }
 }
+}
 
 function showPosition(position){
   lat = position.coords.latitude;
   long = position.coords.longitude;
   location = lat + ","+long;
-}
 
-function get_city(location){
   let xhr = new XMLHttpRequest();
 
   xhr.open("GET" , "https://geocode.xyz/?locate="+location,true);
@@ -575,9 +574,10 @@ function get_city(location){
 
   }
    xhr.send();
+}
  }
-}
-}
+
+
 
 /*function allowDrop(ev){
   ev.preventDefault();
