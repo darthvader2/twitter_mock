@@ -269,11 +269,11 @@ change_pass = function(){
 
   }
 }
-xhr.send(payloadString);
+  xhr.send(payloadString);
 }
 
 
-}
+
 
 load = function(token){
 
