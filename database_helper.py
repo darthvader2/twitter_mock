@@ -17,20 +17,20 @@ def disconnect_db():
         g.db = None
 
 
-def save_user(email,first_name,last_name,password_hash, gender , city , country, salt):
+def save_user(email,first_name,last_name,password_hash, gender , city , country):
     db = get_db()
     cursor = db.cursor()
-    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country, salt) VALUES (?,?,?,?,?,?,?,?)"
-    cursor.execute(statement, [email,first_name, last_name, password_hash, gender , city , country, salt])
+    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country) VALUES (?,?,?,?,?,?,?,?)"
+    cursor.execute(statement, [email,first_name, last_name, password_hash, gender , city , country])
     db.commit()
     return True
 
 
 def sign_in(email):
-    cursor = get_db().execute("select email,password_hash, salt from users where email like ?", [email])
+    cursor = get_db().execute("select email,password_hash from users where email like ?", [email])
     user = cursor.fetchone()
     ##if not user:
-        ##return False
+        #return False
     return user
 
 

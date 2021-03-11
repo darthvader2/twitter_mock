@@ -5,8 +5,8 @@ CREATE TABLE users(
     password_hash varchar(100),
     gender varchar(50),
     city varchar(50),
-    country varchar(50),
-    salt varchar(50));
+    country varchar(50));
+
 
 CREATE TABLE loggedin_users(
     token varchar(100),

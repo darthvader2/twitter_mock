@@ -81,9 +81,9 @@ def sign_up():
     if not country:
         return jsonify({"success": False,"msg": "Missing country parameter"}), 400
 
-    salt = os.urandom(10)
-    password_hash = bcrypt.generate_password_hash(password + salt)
-    result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country, salt)
+
+    password_hash = bcrypt.generate_password_hash(password)
+    result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country)
 
 
     if (result == True):
@@ -118,8 +118,7 @@ def sign_in():
 
     user = database_helper.sign_in(email)
     stored_pw = user[1]
-    salt = user[2]
-    result = bcrypt.check_password_hash(stored_pw, password + salt)
+    result = bcrypt.check_password_hash(stored_pw, password)
 
     if (result == True):
         token = secrets.token_hex(16)
