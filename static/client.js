@@ -252,7 +252,7 @@ change_pass = function(){
       "oldpassword":oldPassword
    };
 
-   const payloadString = JSON.stringify(payload)
+   const payloadString = JSON.stringify(payload);
 
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/change_password" ,true);
