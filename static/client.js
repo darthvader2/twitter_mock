@@ -245,7 +245,7 @@ change_pass = function(){
     document.getElementById("cp-error").innerHTML = "Passwords did not match";
   }
   else {
-     var token = localStorage.getItem("token", token)
+     var token = localStorage.getItem("token", token);
      const payload ={
       "token" : token,
       "newpassword":password,
