@@ -337,11 +337,11 @@ load_msgs = function(token){
       var li=document.createElement('li' );
       var textnode = document.createTextNode(messages[i].content);
       var writer = document.createTextNode(messages[i].writer);
-      var location = document.createTextNode(messages[i].location);
+
 
       li.appendChild(textnode);
       li.appendChild(writer);
-      li.appendChild(location);
+
       ul.appendChild(li);
 
       }}
@@ -401,14 +401,14 @@ postmsg = function(){
    var content = document.getElementById("psm").value;
    var token = localStorage.getItem('token');
    var email = localStorage.getItem('email');
-   var location = geolocation();
+
    console.log("pfk");
 
    const payload ={
       "token" : token,
       "message" : content,
       "email":email,
-      "location": location
+
    };
    const payloadString = JSON.stringify(payload)
 
@@ -452,10 +452,10 @@ function reloadwall(){ //see other Users wall on their home tab
       var li=document.createElement('li' );
       var textnode = document.createTextNode(messages[i].content);
       var writer = document.createTextNode(messages[i].writer);
-      var location = document.createTextNode(messages[i].location)
+
       li.appendChild(textnode);
       li.appendChild(writer);
-      li.appendChild(location)
+
       ul.appendChild(li);
 
       }}
@@ -477,12 +477,12 @@ function postonwall(){ //send message to user while visiting home tab
   var token = localStorage.getItem('token');
   var wanted_email = document.getElementById("usersearch").value;
   var content = document.getElementById("wallpsm").value;
-  var location = geolocation();
+
   const payload ={
    "token" : token,
    "message" : content,
    "email":wanted_email,
-   "location":location
+
 };
 const payloadString = JSON.stringify(payload)
 
@@ -547,42 +547,3 @@ search_user = function(){
 
 
 };
-
-function geolocation(){
-  if (document.getElementById('enable location').checked)
-  {
-    if (navigator.geolocation) {
-    position = navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    document.getElementById(locationError).innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-}
-
-function showPosition(position){
-  lat = position.coords.latitude;
-  long = position.coords.longitude;
-  location = lat + ","+long;
-
-  let xhr = new XMLHttpRequest();
-
-  xhr.open("GET" , "https://geocode.xyz/?locate="+location,true);
-  xhr.setRequestHeader("Content-type", "application/json");
-  xhr.onreadystatechange = () =>{
-     if(xhr.readyState === 4 && xhr.status === 200){
-        let location  = JSON.parse(xhr.responseText);
-
-  }
-   xhr.send();
-}
- }
-
-
-
-/*function allowDrop(ev){
-  ev.preventDefault();
-}
-function drag(ev){
-  ev.dataTransfer.setData("text", ev.target.id);
-}
-*/
