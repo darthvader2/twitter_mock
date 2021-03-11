@@ -7,7 +7,7 @@ from geventwebsocket import WebSocketError
 import os
 import json
 from flask_bcrypt import Bcrypt
-from hashlib import sha256
+
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -182,13 +182,8 @@ def get_user_data_by_email(email):
 
 @app.route('/change_password', methods=['POST','GET'])
 def change_password():
-    email = request.json['email']
-    received_hash = request.json['hash']
-    token = [token for token, email in loggedInUsers.items() if email == email]
-    data = token+email
-    generated_hash= sha256(data.encode('utf-8')).hexdigest()
-
-    if recieved_hash == generated_hash:
+    token = request.json['token']
+    email = loggedInUsers.get(token)
 
         if email is None:
             return jsonify({"success": False, "message": "No such token."}) ,400
@@ -205,8 +200,6 @@ def change_password():
             return jsonify({"success": True, "message": "Password successfully changed", "data": ""}),200
         else:
             return jsonify({"success": False, "message": "Could not change password", "data": ""}) ,400
-    else:
-        return jsonify({"success": False, "message": "No authenticated user", "data": ""}) ,400
 
 
 

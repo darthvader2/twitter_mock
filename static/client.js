@@ -246,12 +246,13 @@ change_pass = function(){
   }
   else {
      var token = localStorage.getItem("token", token);
-     var email = localStorage.getItem("email");
-     var message = token+email;
-     var hash = digestMessage(message);
+     //var email = localStorage.getItem("email");
+     //var message = token+email;
+     //var hash = digestMessage(message);
      const payload ={
-      "email": email
-      "hash" : hash,
+    //  "email": email
+    //  "hash" : hash,
+      "token": token_hex
       "newpassword":password,
       "oldpassword":oldPassword
    };
@@ -548,9 +549,9 @@ search_user = function(){
 };
 
 
-async function digestMessage(message) {
+/*async function digestMessage(message) {
   const encoder = new TextEncoder();
   const data = encoder.encode(message);
   const hash = await crypto.subtle.digest('SHA-256', data);
   return hash;
-}
+}*/
