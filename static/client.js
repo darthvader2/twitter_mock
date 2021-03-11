@@ -565,10 +565,10 @@ function geolocation(){
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onreadystatechange = () =>{
      if(xhr.readyState === 4 && xhr.status === 200){
-        let location  = JSON.parse(xhr.responseText);
+        let location  = JSON.parse(xhr.responseText);*/
 
   }
-   xhr.send();*/
+  // xhr.send();
 };
 
 /*function allowDrop(ev){
