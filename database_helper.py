@@ -29,8 +29,8 @@ def save_user(email,first_name,last_name,password_hash, gender , city , country,
 def sign_in(email):
     cursor = get_db().execute("select email,password_hash, salt from users where email like ?", [email])
     user = cursor.fetchone()
-    if not user:
-        return False
+    ##if not user:
+        ##return False
     return user
 
 

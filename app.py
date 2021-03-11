@@ -84,9 +84,7 @@ def sign_up():
     salt = os.urandom(10)
     password_hash = bcrypt.generate_password_hash(password + salt)
     result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country, salt)
-    print (email)
-    print (password_hash)
-    print (salt)
+
 
     if (result == True):
         return jsonify({"success": True,"msg": "User saved."}), 200
