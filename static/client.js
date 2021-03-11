@@ -569,6 +569,8 @@ function geolocation(){
 
   }
    xhr.send();
+ }
+}
 };
 
 /*function allowDrop(ev){
