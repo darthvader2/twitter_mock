@@ -246,10 +246,14 @@ change_pass = function(){
   }
   else {
      var token = localStorage.getItem("token", token)
-     const payload ={
-      "token" : token,
-      "newpassword":password,
-      "oldpassword":oldPassword
+     var email = localStorage.getItem("email");
+      var message = token+email;
+      var hash = digestMessage(message);
+      const payload ={
+       "email": email,
+       "hash" : hash,
+       "newpassword":password,
+       "oldpassword":oldPassword
    };
 
    const payloadString = JSON.stringify(payload)
