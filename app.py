@@ -206,7 +206,7 @@ def change_password():
         else:
             return jsonify({"success": False, "message": "Could not change password", "data": ""}) ,400
     else:
-        return jsonify({"success": False, "message": "No authenticated user", "data": ""}) ,400)
+        return jsonify({"success": False, "message": "No authenticated user", "data": ""}) ,400
 
 
 
