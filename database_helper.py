@@ -59,11 +59,11 @@ def change_password(new_password, email): #password = newpassword
         return False
 
 
-def addpost(sender, receiver, message):
+def addpost(sender, receiver, message, location):
     try:
         db = get_db()
         cursor = db.cursor()
-        statement = "INSERT INTO messages VALUES (?, ?, ?)"
+        statement = "INSERT INTO messages VALUES (?, ?, ?, ?)"
         cursor.execute(statement ,[receiver,sender, message, location])
         db.commit()
         return True
