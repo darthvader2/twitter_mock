@@ -253,7 +253,7 @@ change_pass = function(){
    };
 
    const payloadString = JSON.stringify(payload);
-
+ }
    let xhr = new XMLHttpRequest();
    xhr.open("POST" , "/change_password" ,true);
    xhr.setRequestHeader("Content-type", "application/json");
