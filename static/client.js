@@ -577,7 +577,7 @@ function get_city(location){
    xhr.send();
  }
 }
-
+}
 
 /*function allowDrop(ev){
   ev.preventDefault();
