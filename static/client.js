@@ -401,7 +401,7 @@ postmsg = function(){
    var content = document.getElementById("psm").value;
    var token = localStorage.getItem('token');
    var email = localStorage.getItem('email');
-   var location =
+   var location = geolocation();
    console.log("pfk");
 
    const payload ={
