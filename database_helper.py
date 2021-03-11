@@ -20,8 +20,8 @@ def disconnect_db():
 def save_user(email,first_name,last_name,password_hash, gender , city , country, salt):
     db = get_db()
     cursor = db.cursor()
-    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country, salt) VALUES (?,?,?,?,?,?,?;?)"
-    cursor.execute(statement, [email,first_name,last_name,password_hash,gender , city , country, salt])
+    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country, salt) VALUES (?,?,?,?,?,?,?,?)"
+    cursor.execute(statement, [email,first_name, last_name, password_hash, gender , city , country, salt])
     db.commit()
     return True
 
