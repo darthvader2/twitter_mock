@@ -182,23 +182,30 @@ def get_user_data_by_email(email):
 
 @app.route('/change_password', methods=['POST','GET'])
 def change_password():
-    token = request.json['token']
-    email = loggedInUsers.get(token)
-    if email is None:
-        return jsonify({"success": False, "message": "No such token."}) ,400
+    email = request.json['email']
+    received_hash = request.json['hash']
+    token = [token for token, email in loggedInUsers.items() if email == email]
+    data = token+email
+    generated_hash= sha256(data.encode('utf-8')).hexdigest()
 
-    new_password = request.json.get('newpassword', None)
-    old_password = request.json.get('oldpassword', None)
-    old_result = database_helper.sign_in(email,old_password)
-    if (old_result == False):
-        return jsonify({"success": False, "message": "Old password not right"}) ,400
-    else:
-        new_password_hash = bcrypt.generate_password_hash(new_password)
-        new_result = database_helper.change_password(new_password ,email)
-    if (new_result == True):
-        return jsonify({"success": True, "message": "Password successfully changed", "data": ""}),200
-    else:
-        return jsonify({"success": False, "message": "Could not change password", "data": ""}) ,400
+    if recieved_hash == generated_hash:
+        token = request.json['token']
+        email = loggedInUsers.get(token)
+        if email is None:
+            return jsonify({"success": False, "message": "No such token."}) ,400
+
+        new_password = request.json.get('newpassword', None)
+        old_password = request.json.get('oldpassword', None)
+        old_result = database_helper.sign_in(email,old_password)
+        if (old_result == False):
+            return jsonify({"success": False, "message": "Old password not right"}) ,400
+        else:
+            new_password_hash = bcrypt.generate_password_hash(new_password)
+            new_result = database_helper.change_password(new_password ,email)
+        if (new_result == True):
+            return jsonify({"success": True, "message": "Password successfully changed", "data": ""}),200
+        else:
+            return jsonify({"success": False, "message": "Could not change password", "data": ""}) ,400
 
 
 
