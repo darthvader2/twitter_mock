@@ -559,8 +559,8 @@ function geolocation(){
 }
 
 function showPosition(position){
-  lat = position.coord.latitude;
-  long = position.coord.longitude;
+  lat = position.coords.latitude;
+  long = position.coords.longitude;
   location = lat + ","+long;
 }
 
