@@ -170,7 +170,7 @@ def get_user_data_by_email(email):
                 "email" : user[0],
                 "familyname":user[1],
                 "firstname" : user[2],
-                "password" : user[3],
+                "password_hash" : user[3],
                 "gender" : user[4],
                 "city" : user[5],
                 "country" : user[6]
