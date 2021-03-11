@@ -552,7 +552,7 @@ function geolocation(){
   if (document.getElementById('enable location').checked)
   {
     if (navigator.geolocation) {
-    position = navigator.geolocation.getCurrentPosition();
+    position = navigator.geolocation.getCurrentPosition(position);
   } else {
     document.getElementById(locationError).innerHTML = "Geolocation is not supported by this browser.";
   }
