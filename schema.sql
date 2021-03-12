@@ -22,5 +22,5 @@ CREATE TABLE loggedin_users(
 CREATE TABLE messages(
     recepient varchar(100),
     sender varchar(100),
-    msg varchar(140),
+    msg varchar(140)
     );
