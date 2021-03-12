@@ -64,7 +64,7 @@ def addpost(sender, receiver, message):
         db = get_db()
         cursor = db.cursor()
         statement = "INSERT INTO messages VALUES (?, ?, ?)"
-        cursor.execute(statement ,[receiver,sender, message)
+        cursor.execute(statement ,[receiver,sender, message])
         db.commit()
         return True
     except:
