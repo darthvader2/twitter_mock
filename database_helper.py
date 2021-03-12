@@ -17,11 +17,11 @@ def disconnect_db():
         g.db = None
 
 
-def save_user(email,first_name,last_name,password,gender , city , country):
+def save_user(email,first_name,last_name,password_hash,gender , city , country,salt):
     db = get_db()
     cursor = db.cursor()
-    statement = "INSERT INTO users(email,first_name,last_name,password,gender , city , country) VALUES (?,?,?,?,?,?,?)"
-    cursor.execute(statement, [email,first_name,last_name,password,gender , city , country])
+    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country,salt) VALUES (?,?,?,?,?,?,?,?)"
+    cursor.execute(statement, [email,first_name,last_name,password_hash,gender , city , country,salt])
     db.commit()
     return True
 
@@ -59,7 +59,7 @@ def change_password(new_password, email): #password = newpassword
         return False
 
 
-def addpost(sender, receiver, message):
+def addpost(sender, receiver, message,location):
     try:
         db = get_db()
         cursor = db.cursor()
@@ -78,5 +78,5 @@ def findposts_email(email):
     cursor.execute(query,[email])
     rows = cursor.fetchall()
     for i in range(len(rows)):
-        result.append({'writer':rows[i][1], 'content':rows[i][2]}, 'location':rows[i][3])
+        result.append({'writer':rows[i][1], 'content':rows[i][2], 'location':rows[i][3]})
     return result

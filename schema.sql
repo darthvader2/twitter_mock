@@ -1,4 +1,4 @@
-CREATE TABLE users(
+CREATE TABLE IF NOT EXISTS users(
     email varchar(100),
     first_name varchar(50),
     last_name varchar(50),
@@ -8,7 +8,7 @@ CREATE TABLE users(
     country varchar(50),
     salt varchar(50));
 
-CREATE TABLE loggedin_users(
+CREATE TABLE IF NOT EXISTS loggedin_users(
     token varchar(100),
     email varchar(100),
     first_name varchar(50),

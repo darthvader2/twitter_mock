@@ -6,7 +6,7 @@ from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketError
 import os
 import json
-from flask.ext.bcrypt import Bcrypt
+from flask_ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -81,7 +81,7 @@ def sign_up():
     if not country:
         return jsonify({"success": False,"msg": "Missing country parameter"}), 400
 
-    salt = os.urandom(10)
+    salt = secrets.token_hex(10)
     password_hash = bcrypt.generate_password_hash(password + salt)
     result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country, salt)
 
@@ -116,6 +116,7 @@ def sign_in():
         return jsonify({"success": False,"msg": "Password length not sufficient"}), 400
 
     user = database_helper.sign_in(email)
+    print(user)
     stored_pw = user[1]
     salt = user[2]
     result = bcrypt.check_password_hash(stored_pw, password + salt)
@@ -188,7 +189,11 @@ def change_password():
 
     new_password = request.json.get('newpassword', None)
     old_password = request.json.get('oldpassword', None)
-    old_result = database_helper.sign_in(email,old_password)
+    user = database_helper.sign_in(email)
+    print(user)
+    stored_pw = user[1]
+    salt = user[2]
+    old_result = bcrypt.check_password_hash(stored_pw, old_password + salt)
     if (old_result == False):
         return jsonify({"success": False, "message": "Old password not right"}) ,400
     else:
