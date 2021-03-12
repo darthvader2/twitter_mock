@@ -17,20 +17,20 @@ def disconnect_db():
         g.db = None
 
 
-def save_user(email,first_name,last_name,password_hash,gender , city , country,salt):
+def save_user(email,first_name,last_name,password_hash, gender , city , country):
     db = get_db()
     cursor = db.cursor()
-    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country,salt) VALUES (?,?,?,?,?,?,?,?)"
-    cursor.execute(statement, [email,first_name,last_name,password_hash,gender , city , country,salt])
+    statement = "INSERT INTO users(email,first_name,last_name,password_hash,gender , city , country) VALUES (?,?,?,?,?,?,?)"
+    cursor.execute(statement, [email,first_name, last_name, password_hash, gender , city , country])
     db.commit()
     return True
 
 
 def sign_in(email):
-    cursor = get_db().execute("select email,password_hash, salt from users where email like ?", [email])
+    cursor = get_db().execute("select email,password_hash from users where email like ?", [email])
     user = cursor.fetchone()
-    if not user:
-        return False
+    ##if not user:
+        #return False
     return user
 
 
@@ -52,7 +52,7 @@ def change_password(new_password, email): #password = newpassword
     try:
         db = get_db()
         cursor = db.cursor()
-        cursor.execute("UPDATE users SET password = ? WHERE email = ?", [new_password, email])
+        cursor.execute("UPDATE users SET password_hash = ? WHERE email = ?", [new_password, email])
         db.commit()
         return True
     except:
@@ -64,7 +64,7 @@ def addpost(sender, receiver, message,location):
         db = get_db()
         cursor = db.cursor()
         statement = "INSERT INTO messages VALUES (?, ?, ?)"
-        cursor.execute(statement ,[receiver,sender, message, location])
+        cursor.execute(statement ,[receiver,sender, message])
         db.commit()
         return True
     except:
@@ -80,3 +80,14 @@ def findposts_email(email):
     for i in range(len(rows)):
         result.append({'writer':rows[i][1], 'content':rows[i][2], 'location':rows[i][3]})
     return result
+
+def storekey(email, key):
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        statement = "UPDATE users SET key = ? WHERE email = ?"
+        cursor.execute(statement, [key, email])
+        db.commit()
+        return True
+    except:
+        return False

@@ -6,7 +6,8 @@ from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketError
 import os
 import json
-from flask_ext.bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt
+
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -81,9 +82,10 @@ def sign_up():
     if not country:
         return jsonify({"success": False,"msg": "Missing country parameter"}), 400
 
-    salt = secrets.token_hex(10)
-    password_hash = bcrypt.generate_password_hash(password + salt)
-    result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country, salt)
+
+    password_hash = bcrypt.generate_password_hash(password)
+    result = database_helper.save_user(email,first_name,last_name,password_hash,gender , city , country)
+
 
     if (result == True):
         return jsonify({"success": True,"msg": "User saved."}), 200
@@ -118,13 +120,14 @@ def sign_in():
     user = database_helper.sign_in(email)
     print(user)
     stored_pw = user[1]
-    salt = user[2]
-    result = bcrypt.check_password_hash(stored_pw, password + salt)
+    result = bcrypt.check_password_hash(stored_pw, password)
 
     if (result == True):
         token = secrets.token_hex(16)
         loggedInUsers[token] = email
-        return jsonify({"success": True,"msg": "User authenticated","token":token}), 200
+        key = secrets.token_hex(16) ##Create private key for user
+        database_helper.storekey(email, key)
+        return jsonify({"success": True,"msg": "User authenticated","token":token, "key": key}), 200
     else:
         return jsonify({"success": False,"msg": "Password did no match"}), 400
 
@@ -168,7 +171,7 @@ def get_user_data_by_email(email):
                 "email" : user[0],
                 "familyname":user[1],
                 "firstname" : user[2],
-                "password" : user[3],
+                "password_hash" : user[3],
                 "gender" : user[4],
                 "city" : user[5],
                 "country" : user[6]
@@ -182,26 +185,30 @@ def get_user_data_by_email(email):
 
 @app.route('/change_password', methods=['POST','GET'])
 def change_password():
-    token = request.json['token']
-    email = loggedInUsers.get(token)
-    if email is None:
-        return jsonify({"success": False, "message": "No such token."}) ,400
+    email = request.json['email']
+    received_hash = request.json['hash']
+    token = [token for token, email in loggedInUsers.items() if email == email]
+    data = token+email
+    generated_hash= sha256(data.encode('utf-8')).hexdigest()
 
-    new_password = request.json.get('newpassword', None)
-    old_password = request.json.get('oldpassword', None)
-    user = database_helper.sign_in(email)
-    print(user)
-    stored_pw = user[1]
-    salt = user[2]
-    old_result = bcrypt.check_password_hash(stored_pw, old_password + salt)
-    if (old_result == False):
-        return jsonify({"success": False, "message": "Old password not right"}) ,400
-    else:
-        new_result = database_helper.change_password(new_password ,email)
-    if (new_result == True):
-        return jsonify({"success": True, "message": "Password successfully changed", "data": ""}),200
-    else:
-        return jsonify({"success": False, "message": "Could not change password", "data": ""}) ,400
+    if recieved_hash == generated_hash:
+        token = request.json['token']
+        email = loggedInUsers.get(token)
+        if email is None:
+            return jsonify({"success": False, "message": "No such token."}) ,400
+
+        new_password = request.json.get('newpassword', None)
+        old_password = request.json.get('oldpassword', None)
+        old_result = database_helper.sign_in(email,old_password)
+        if (old_result == False):
+            return jsonify({"success": False, "message": "Old password not right"}) ,400
+        else:
+            new_password_hash = bcrypt.generate_password_hash(new_password)
+            new_result = database_helper.change_password(new_password ,email)
+        if (new_result == True):
+            return jsonify({"success": True, "message": "Password successfully changed", "data": ""}),200
+        else:
+            return jsonify({"success": False, "message": "Could not change password", "data": ""}) ,400
 
 
 
@@ -238,9 +245,8 @@ def post_message():
     token = request.json['token']
     message = request.json['message']
     reciever = request.json['email']
-    location = request.json['location']
     sender = loggedInUsers.get(token)
-    res = database_helper.addpost(sender, reciever, message, location)
+    res = database_helper.addpost(sender, reciever, message)
     if (res == False):
         return jsonify({"success": False, "message": "Messa"}),400
     return jsonify({"success": True, "message": "Message has been sent"})
