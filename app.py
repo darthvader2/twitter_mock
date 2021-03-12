@@ -124,7 +124,9 @@ def sign_in():
     if (result == True):
         token = secrets.token_hex(16)
         loggedInUsers[token] = email
-        return jsonify({"success": True,"msg": "User authenticated","token":token}), 200
+        key = secrets.token_hex(16) ##Create private key for user
+        database_helper.storekey(email, key)
+        return jsonify({"success": True,"msg": "User authenticated","token":token, "key": key}), 200
     else:
         return jsonify({"success": False,"msg": "Password did no match"}), 400
 

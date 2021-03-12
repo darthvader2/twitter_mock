@@ -57,7 +57,7 @@ connectWS = function () {
    }
 }
 
- profileLoader = function(token){
+ profileLoader = function(token, key){
 
       var welcome_wraper = document.getElementById("profileview").innerHTML;
       var navigation_wraper = document.getElementById("navigationview").innerHTML;
@@ -68,6 +68,7 @@ connectWS = function () {
    document.getElementById("content-wraper").innerHTML = content_wraper;
 
    localStorage.setItem("token" , token);
+   localStorage.setItem("key", key);
    load(token);
    load_msgs(token);
 
@@ -195,7 +196,7 @@ signin_validator = function(){
       if(xhr.readyState === 4 && xhr.status === 200){
          let object  = JSON.parse(xhr.responseText);
          if (object['success'] == true){
-            profileLoader(object['token']);
+            profileLoader(object['token'], object['key']);
             var msg = {
                type : "login",
                email : email
@@ -245,8 +246,9 @@ change_pass = function(){
     document.getElementById("cp-error").innerHTML = "Passwords did not match";
   }
   else {
-     var token = localStorage.getItem("token", token)
+     var token = localStorage.getItem("token", token);
      var email = localStorage.getItem("email");
+     var key = localStorage.getItem("key";)
       var message = token+email;
       var hash = digestMessage(message);
       const payload ={

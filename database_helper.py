@@ -80,3 +80,14 @@ def findposts_email(email):
     for i in range(len(rows)):
         result.append({'writer':rows[i][1], 'content':rows[i][2], 'location':rows[i][3]})
     return result
+
+def storekey(email, key):
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        statement = "UPDATE users SET key = ? WHERE email = ?"
+        cursor.execute(statement, [key, email])
+        db.commit()
+        return True
+    except:
+        return False
