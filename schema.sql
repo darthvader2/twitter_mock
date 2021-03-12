@@ -23,4 +23,4 @@ CREATE TABLE messages(
     recepient varchar(100),
     sender varchar(100),
     msg varchar(140),
-    location varchar(100));
+    );
