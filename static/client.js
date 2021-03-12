@@ -246,9 +246,14 @@ change_pass = function(){
     document.getElementById("cp-error").innerHTML = "Passwords did not match";
   }
   else {
+<<<<<<< HEAD
      var token = localStorage.getItem("token", token);
      var email = localStorage.getItem("email");
      var key = localStorage.getItem("key";)
+=======
+     var token = localStorage.getItem("token", token)
+     var email = localStorage.getItem("email");
+>>>>>>> main
       var message = token+email;
       var hash = digestMessage(message);
       const payload ={
