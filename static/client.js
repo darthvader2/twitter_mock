@@ -57,7 +57,7 @@ connectWS = function () {
    }
 }
 
- profileLoader = function(token){
+ profileLoader = function(token, key){
 
       var welcome_wraper = document.getElementById("profileview").innerHTML;
       var navigation_wraper = document.getElementById("navigationview").innerHTML;
@@ -68,6 +68,7 @@ connectWS = function () {
    document.getElementById("content-wraper").innerHTML = content_wraper;
 
    localStorage.setItem("token" , token);
+   localStorage.setItem("key", key);
    load(token);
    load_msgs(token);
 
@@ -111,6 +112,7 @@ signup_validator  = function(){
    var country  = document.getElementById("country").value;
 
    console.log(email);
+
    var user = {
       email : email,
       password :password,
@@ -194,7 +196,7 @@ signin_validator = function(){
       if(xhr.readyState === 4 && xhr.status === 200){
          let object  = JSON.parse(xhr.responseText);
          if (object['success'] == true){
-            profileLoader(object['token']);
+            profileLoader(object['token'], object['key']);
             var msg = {
                type : "login",
                email : email
@@ -244,11 +246,17 @@ change_pass = function(){
     document.getElementById("cp-error").innerHTML = "Passwords did not match";
   }
   else {
-     var token = localStorage.getItem("token", token)
-     const payload ={
-      "token" : token,
-      "newpassword":password,
-      "oldpassword":oldPassword
+
+     var token = localStorage.getItem("token", token);
+     var email = localStorage.getItem("email");
+     var key = localStorage.getItem("key");
+    //var message = token+email;
+    //  var hash = digestMessage(message);
+      const payload ={
+       "email": email,
+       //"hash" : hash,
+       "newpassword":password,
+       "oldpassword":oldPassword
    };
 
    const payloadString = JSON.stringify(payload)
@@ -336,11 +344,8 @@ load_msgs = function(token){
       var li=document.createElement('li' );
       var textnode = document.createTextNode(messages[i].content);
       var writer = document.createTextNode(messages[i].writer);
-      var location = document.createTextNode(messages[i].location);
-
       li.appendChild(textnode);
       li.appendChild(writer);
-      li.appendChild(location);
       ul.appendChild(li);
 
       }}
@@ -400,14 +405,13 @@ postmsg = function(){
    var content = document.getElementById("psm").value;
    var token = localStorage.getItem('token');
    var email = localStorage.getItem('email');
-   var location = geolocation()
    console.log("pfk");
 
    const payload ={
       "token" : token,
       "message" : content,
       "email":email,
-      "location": location
+
    };
    const payloadString = JSON.stringify(payload)
 
@@ -451,10 +455,9 @@ function reloadwall(){ //see other Users wall on their home tab
       var li=document.createElement('li' );
       var textnode = document.createTextNode(messages[i].content);
       var writer = document.createTextNode(messages[i].writer);
-      var location = document.createTextNode(messages[i].location)
       li.appendChild(textnode);
       li.appendChild(writer);
-      li.appendChild(location)
+
       ul.appendChild(li);
 
       }}
@@ -476,12 +479,12 @@ function postonwall(){ //send message to user while visiting home tab
   var token = localStorage.getItem('token');
   var wanted_email = document.getElementById("usersearch").value;
   var content = document.getElementById("wallpsm").value;
-  var location = geolocation();
+
   const payload ={
    "token" : token,
    "message" : content,
    "email":wanted_email,
-   "location":location
+
 };
 const payloadString = JSON.stringify(payload)
 
@@ -547,31 +550,10 @@ search_user = function(){
 
 };
 
-function geolocation(){
-  if (document.getElementById('enable location').checked)
-  {
-    if (navigator.geolocation) {
-    position = navigator.geolocation.getCurrentPosition();
-  } else {
-    document.getElementById(locationError).innerHTML = "Geolocation is not supported by this browser.";
-  }
-  lat = position.coord.latitude;
-  long = position.coord.longitude;
-  location = lat + ","+long;
-  let xhr = new XMLHttpRequest();
 
-  xhr.open("GET" , "https://geocode.xyz/?locate="+location,true);
-  xhr.setRequestHeader("Content-type", "application/json");
-  xhr.onreadystatechange = () =>{
-     if(xhr.readyState === 4 && xhr.status === 200){
-        let location  = JSON.parse(xhr.responseText);
-
-  }
-   xhr.send();
-};
-function allowDrop(ev){
-  ev.preventDefault();
+async function digestMessage(message) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return hash;
 }
-function drag(ev){
-  ev.dataTransfer.setData("text", ev.target.id);
-}}}
