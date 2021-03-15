@@ -78,7 +78,7 @@ def findposts_email(email):
     cursor.execute(query,[email])
     rows = cursor.fetchall()
     for i in range(len(rows)):
-        result.append({'writer':rows[i][1], 'content':rows[i][2], 'location':rows[i][3]})
+        result.append({'writer':rows[i][1], 'content':rows[i][2]})
     return result
 
 def storekey(email, key):
