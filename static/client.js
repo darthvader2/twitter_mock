@@ -344,6 +344,7 @@ load_msgs = function(token){
       var li=document.createElement('li' );
       var textnode = document.createTextNode(messages[i].content);
       var writer = document.createTextNode(messages[i].writer);
+      textnode.setAttribute(draggable="true", ondragstart="drag(event)")
       li.appendChild(textnode);
       li.appendChild(writer);
       ul.appendChild(li);
@@ -556,4 +557,19 @@ async function digestMessage(message) {
   const data = encoder.encode(message);
   const hash = await crypto.subtle.digest('SHA-256', data);
   return hash;
+}
+
+//Drag-and-Drop
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
 }
