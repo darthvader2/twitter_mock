@@ -31,7 +31,7 @@
             <br>
                 <div id = "login-error"></div>
             <br>
-                <button style = "padding:2px;" type="submit" onclick = "signin_validator()">Login</button>
+                <button name="sign_in_button" style = "padding:2px;" type="submit" onclick = "signin_validator()">Login</button>
 
 
             </form>
@@ -64,7 +64,7 @@
             <br>
             <div id = "signup-error"></div>
             <br>
-            <button style = "padding:2px;" type="submit" onclick ="signup_validator()">Sign up</button>
+            <button style = "padding:2px;" type="submit" id = "signup_button" onclick ="signup_validator()">Sign up</button>
         </form>
 
         </div>
@@ -85,9 +85,9 @@
 
         <script type = "text/view" , id = "navigationview">
             <ul class="nav">
-                <li><a href="#tab1">Home</a></li>
-                <li><a href="#tab2">Browse</a></li>
-                <li><a href="#tab3">Account</a></li>
+                <li><a href="#tab1" name = "home">Home</a></li>
+                <li><a href="#tab2" name = "browse">Browse</a></li>
+                <li><a href="#tab3" name = "account">Account</a></li>
                </ul>
         </script>
     </head>
@@ -112,7 +112,7 @@
                     <input style = "padding :50px; margin-top:10px" type="text" placeholder="Message" name="psm" id ="psm">
 
                  <br>
-                 <button style = "padding:2px; margin-top :10px" type="submit" onclick = "postmsg()">submit</button>
+                 <button style = "padding:2px; margin-top :10px" type="submit" onclick = "postmsg()" name = "psm_button">submit</button>
 
             </form>
             </div>
@@ -135,7 +135,7 @@
                       <row>
                         <label for="usersearch"> Enter Email-adress of wanted user </label>
                         <input id="usersearch" type="text" required>
-                        <button type = "submit" onclick="search_user()"> Search </button>
+                        <button type = "submit" name = "usersearch_button" onclick="search_user()"> Search </button>
                     </div>
 
                   <div id="browse-wrapper"></div>
@@ -162,13 +162,13 @@
                 <br>
                 <div id = "cp-error"></div>
                 <br>
-                    <button style = "width:80px;margin-top:15px" type="submit" onclick ="change_pass()">submit</button>
+                    <button name = "psw_change_button" style = "width:80px;margin-top:15px" type="submit" onclick ="change_pass()">submit</button>
                 <br>
 
                 </form>
 
                 </div>
-                <button style = "width:80px;margin-top:15px" type="button" onclick ="signout()">sign-out</button>
+                <button style = "width:80px;margin-top:15px" type="button" onclick ="signout()" name = "sign_out_button">sign-out</button>
 
             </div>
 
@@ -192,7 +192,7 @@
     <h1>Post message</h1>
     <input style = "padding :50px; margin-top:10px" type="text" placeholder="Message" name="wallpsm" id ="wallpsm">
  <br>
- <button style = "padding:2px; margin-top :10px" type="submit" onclick = "postonwall()">submit</button>
+ <button style = "padding:2px; margin-top :10px" type="submit" onclick = "postonwall()" name="wallpsm_button">submit</button>
 
  </div>
  <div class = "wall">

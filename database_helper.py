@@ -59,7 +59,7 @@ def change_password(new_password, email): #password = newpassword
         return False
 
 
-def addpost(sender, receiver, message,location):
+def addpost(sender, receiver, message):
     try:
         db = get_db()
         cursor = db.cursor()

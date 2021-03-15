@@ -248,13 +248,8 @@ change_pass = function(){
   else {
 
      var token = localStorage.getItem("token", token);
-     var email = localStorage.getItem("email");
-     var key = localStorage.getItem("key");
-    //var message = token+email;
-    //  var hash = digestMessage(message);
       const payload ={
-       "email": email,
-       //"hash" : hash,
+       "token": token,
        "newpassword":password,
        "oldpassword":oldPassword
    };
