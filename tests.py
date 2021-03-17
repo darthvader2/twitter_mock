@@ -9,7 +9,8 @@ if sys.argv[1] == "Chrome":
 else:
     driver = webdriver.Firefox(executable_path =   "./geckodriver.exe")
 
-driver.get("http://127.0.0.1:8000/")
+#driver.get("http://127.0.0.1:8000/")
+#driver.get("https://twiddermock.herokuapp.com/")
 
 
 
@@ -35,7 +36,7 @@ def run_tests():
         test_logout()
         driver.close()
     else:
-        print("Please specify the browser you would like to run the tests")
+        print("Please specify the browser you would like to run the tests!")
         sys.exit(1)
 
 
