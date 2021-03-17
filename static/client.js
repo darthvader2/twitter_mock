@@ -6,7 +6,7 @@ var webSocket = null;
 connectWS = function () {
    if(webSocket === null){
        webSocket = new WebSocket("wss://twiddermock.herokuapp.com/api");
-       //console.log("connectWS");
+       console.log("connectWS");
 
        webSocket.onmessage = function (event) {
            //console.log("message received");
@@ -33,10 +33,10 @@ connectWS = function () {
                webSocket.close();
 
            }
-           //console.log(msg);
+           console.log(msg);
        }
        webSocket.onclose = function () {
-           //console.log("ws closed");
+           console.log("ws closed");
            webSocket = null;
        }
    }
